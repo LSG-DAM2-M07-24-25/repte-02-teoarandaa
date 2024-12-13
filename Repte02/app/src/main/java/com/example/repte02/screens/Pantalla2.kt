@@ -9,6 +9,7 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -29,7 +30,6 @@ import com.example.repte02.ui.theme.Repte02Theme
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.draw.clip
 
 @Composable
 fun Pantalla2(
@@ -47,6 +47,17 @@ fun Pantalla2(
         R.drawable.masked_majin
     )
 
+    val buttonModifier = Modifier
+        .padding(16.dp)
+        .fillMaxWidth(0.5f)
+        .height(48.dp)
+
+    val buttonColors = ButtonDefaults.buttonColors(
+        containerColor = Color.Gray,
+        contentColor = Color.White
+    )
+    val buttonShape = RoundedCornerShape(8.dp)
+
     Column(
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally
@@ -55,7 +66,6 @@ fun Pantalla2(
             painter = painterResource(id = R.drawable.dragonball_daima_logo),
             contentDescription = "Dragon Ball Daima Logo",
             modifier = Modifier
-                .padding(16.dp)
                 .height(200.dp)
                 .width(400.dp)
         )
@@ -107,7 +117,9 @@ fun Pantalla2(
                 navController.navigate(route)
             },
             enabled = state.selectedCharacter != -1,
-            modifier = Modifier.padding(16.dp)
+            modifier = buttonModifier,
+            colors = buttonColors,
+            shape = buttonShape
         ) {
             Text("Continuar")
         }

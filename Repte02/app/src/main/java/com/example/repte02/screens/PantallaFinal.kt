@@ -2,14 +2,17 @@ package com.example.repte02.screens
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -30,11 +33,22 @@ private fun PantallaFinalContent(
     characters: List<Int>,
     navController: NavController
 ) {
+
+    val buttonModifier = Modifier
+        .padding(16.dp)
+        .fillMaxWidth(0.5f)
+        .height(48.dp)
+
+    val buttonColors = ButtonDefaults.buttonColors(
+        containerColor = Color.Gray,
+        contentColor = Color.White
+    )
+    val buttonShape = RoundedCornerShape(8.dp)
+
     Column(
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        // Logo en la cabecera
         Image(
             painter = painterResource(id = R.drawable.dragonball_daima_logo),
             contentDescription = "Dragon Ball Daima Logo",
@@ -44,7 +58,6 @@ private fun PantallaFinalContent(
                 .width(400.dp)
         )
 
-        // Contenido principal centrado
         Column(
             modifier = Modifier.weight(1f),
             horizontalAlignment = Alignment.CenterHorizontally,
@@ -68,12 +81,14 @@ private fun PantallaFinalContent(
             )
         }
 
-        // Botón de retorno en la parte inferior
         Button(
             onClick = { navController.navigate(Routes.PANTALLA2) },
-            modifier = Modifier.padding(bottom = 32.dp)
+            modifier = buttonModifier,
+            colors = buttonColors,
+            shape = buttonShape
+
         ) {
-            Text("Volver a la selección de personajes")
+            Text("Volver")
         }
     }
 }

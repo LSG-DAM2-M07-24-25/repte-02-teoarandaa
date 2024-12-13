@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
@@ -30,6 +31,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.rememberNavController
 import com.example.repte02.R
 import com.example.repte02.ui.theme.Repte02Theme
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.ui.unit.dp
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.ui.graphics.Color
 
 @Composable
 fun Pantalla3(
@@ -43,42 +49,62 @@ fun Pantalla3(
         viewModel.updateSelectedCharacter(characterIndex)
     }
 
+    val buttonModifier = Modifier
+        .padding(16.dp)
+        .fillMaxWidth(0.5f)
+        .height(48.dp)
+
+    val buttonColors = ButtonDefaults.buttonColors(
+        containerColor = Color.Gray,
+        contentColor = Color.White
+    )
+    val buttonShape = RoundedCornerShape(8.dp)
+
     Column(
         modifier = Modifier.fillMaxSize(),
-        horizontalAlignment = Alignment.CenterHorizontally
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
         Image(
             painter = painterResource(id = R.drawable.dragonball_daima_logo),
             contentDescription = "Dragon Ball Daima Logo",
             modifier = Modifier
                 .height(200.dp)
-                .width(300.dp)
+                .width(400.dp)
         )
+
+        Spacer(modifier = Modifier.weight(1f))
 
         TextField(
             value = state.playerName,
             onValueChange = { viewModel.updatePlayerName(it) },
             label = { Text("Nombre del personaje") },
-            modifier = Modifier.padding(vertical = 16.dp),
+            modifier = Modifier
+                .padding(horizontal = 32.dp)
+                .fillMaxWidth(0.8f),
             keyboardOptions = KeyboardOptions(
                 keyboardType = KeyboardType.Text,
                 imeAction = ImeAction.Done
-            )
+            ),
+            singleLine = true
         )
 
         Button(
             onClick = { 
-                println("Navegando desde Pantalla3: characterIndex=${state.selectedCharacter}, playerName=${state.playerName}")
                 val route = Routes.PANTALLA_FINAL
                     .replace("{characterIndex}", state.selectedCharacter.toString())
                     .replace("{playerName}", state.playerName)
                 navController.navigate(route)
             },
             enabled = state.playerName.isNotBlank(),
-            modifier = Modifier.padding(top = 16.dp)
+            modifier = buttonModifier,
+            colors = buttonColors,
+            shape = buttonShape
         ) {
             Text("Comenzar")
         }
+
+        Spacer(modifier = Modifier.weight(1f))
     }
 }
 

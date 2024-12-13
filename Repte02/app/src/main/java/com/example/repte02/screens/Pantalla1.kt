@@ -4,6 +4,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -23,6 +24,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.rememberNavController
 import com.example.repte02.R
 import com.example.repte02.ui.theme.Repte02Theme
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.ui.graphics.Color
 
 @Composable
 fun Pantalla1(
@@ -38,15 +42,29 @@ fun Pantalla1(
             painter = painterResource(id = R.drawable.dragonball_daima_logo),
             contentDescription = "Dragon Ball Daima Logo",
             modifier = Modifier
-                .height(200.dp)
-                .width(400.dp)
+                .height(500.dp)
+                .width(700.dp)
+
         )
-        
+
+        val buttonModifier = Modifier
+            .padding(16.dp)
+            .fillMaxWidth(0.5f)
+            .height(48.dp)
+
+        val buttonColors = ButtonDefaults.buttonColors(
+            containerColor = Color.Gray,
+            contentColor = Color.White
+        )
+        val buttonShape = RoundedCornerShape(8.dp)
+
         Button(
             onClick = { viewModel.navigateToScreen2 { navController.navigate(Routes.PANTALLA2) } },
-            modifier = Modifier.padding(top = 16.dp)
+            modifier = buttonModifier,
+            colors = buttonColors,
+            shape = buttonShape
         ) {
-            Text("COMENZAR JUEGO")
+            Text("Entrar")
         }
     }
 }
