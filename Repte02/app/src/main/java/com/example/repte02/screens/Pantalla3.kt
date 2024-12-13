@@ -62,32 +62,37 @@ fun Pantalla3(
 
     Column(
         modifier = Modifier.fillMaxSize(),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy(16.dp)
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Image(
             painter = painterResource(id = R.drawable.dragonball_daima_logo),
             contentDescription = "Dragon Ball Daima Logo",
             modifier = Modifier
                 .height(200.dp)
-                .width(400.dp)
+                .width(300.dp)
+                .padding(16.dp)
         )
 
-        Spacer(modifier = Modifier.weight(1f))
-
-        TextField(
-            value = state.playerName,
-            onValueChange = { viewModel.updatePlayerName(it) },
-            label = { Text("Nombre del personaje") },
-            modifier = Modifier
-                .padding(horizontal = 32.dp)
-                .fillMaxWidth(0.8f),
-            keyboardOptions = KeyboardOptions(
-                keyboardType = KeyboardType.Text,
-                imeAction = ImeAction.Done
-            ),
-            singleLine = true
-        )
+        // Contenido principal centrado
+        Column(
+            modifier = Modifier.weight(1f),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
+        ) {
+            TextField(
+                value = state.playerName,
+                onValueChange = { viewModel.updatePlayerName(it) },
+                label = { Text("Nombre del personaje") },
+                modifier = Modifier
+                    .padding(horizontal = 32.dp)
+                    .fillMaxWidth(0.8f),
+                keyboardOptions = KeyboardOptions(
+                    keyboardType = KeyboardType.Text,
+                    imeAction = ImeAction.Done
+                ),
+                singleLine = true
+            )
+        }
 
         Button(
             onClick = { 
@@ -103,8 +108,6 @@ fun Pantalla3(
         ) {
             Text("Comenzar")
         }
-
-        Spacer(modifier = Modifier.weight(1f))
     }
 }
 

@@ -94,7 +94,7 @@ fun Pantalla2(
                         .fillMaxWidth()
                         .border(
                             width = if (state.selectedCharacter == index) 4.dp else 1.dp,
-                            color = if (state.selectedCharacter == index) Color.Blue else Color.Gray,
+                            color = if (state.selectedCharacter == index) Color.Red else Color.Gray,
                             shape = RoundedCornerShape(12.dp)
                         )
                         .clickable { viewModel.selectCharacter(index) }
