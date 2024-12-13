@@ -82,7 +82,11 @@ fun Pantalla2(
         }
 
         Button(
-            onClick = { viewModel.navigateToScreen3 { navController.navigate(Routes.PANTALLA3) } },
+            onClick = { 
+                val route = Routes.PANTALLA3
+                    .replace("{characterIndex}", state.selectedCharacter.toString())
+                navController.navigate(route)
+            },
             enabled = state.selectedCharacter != -1,
             modifier = Modifier.padding(16.dp)
         ) {

@@ -13,6 +13,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -33,9 +34,14 @@ import com.example.repte02.ui.theme.Repte02Theme
 @Composable
 fun Pantalla3(
     navController: NavController,
+    characterIndex: Int,
     viewModel: Pantalla3ViewModel = viewModel()
 ) {
     val state by viewModel.state.collectAsState()
+
+    LaunchedEffect(characterIndex) {
+        viewModel.updateSelectedCharacter(characterIndex)
+    }
 
     Column(
         modifier = Modifier.fillMaxSize(),
@@ -62,7 +68,11 @@ fun Pantalla3(
 
         Button(
             onClick = { 
-                navController.navigate("pantalla_final/${state.selectedCharacter}/${state.playerName}")
+                println("Navegando desde Pantalla3: characterIndex=${state.selectedCharacter}, playerName=${state.playerName}")
+                val route = Routes.PANTALLA_FINAL
+                    .replace("{characterIndex}", state.selectedCharacter.toString())
+                    .replace("{playerName}", state.playerName)
+                navController.navigate(route)
             },
             enabled = state.playerName.isNotBlank(),
             modifier = Modifier.padding(top = 16.dp)
@@ -77,6 +87,9 @@ fun Pantalla3(
 fun Pantalla3Preview() {
     val navController = rememberNavController()
     Repte02Theme {
-        Pantalla3(navController)
+        Pantalla3(
+            navController = navController,
+            characterIndex = 0
+        )
     }
 } 

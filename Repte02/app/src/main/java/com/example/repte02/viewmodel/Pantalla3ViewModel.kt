@@ -21,4 +21,8 @@ class Pantalla3ViewModel : ViewModel() {
             navigate()
         }
     }
+
+    fun updateSelectedCharacter(index: Int) {
+        _state.value = _state.value.copy(selectedCharacter = index)
+    }
 } 

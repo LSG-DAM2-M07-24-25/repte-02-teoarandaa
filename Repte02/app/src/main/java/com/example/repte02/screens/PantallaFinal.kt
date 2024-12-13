@@ -28,6 +28,8 @@ fun PantallaFinal(
     playerName: String,
     viewModel: PantallaFinalViewModel = viewModel()
 ) {
+    println("PantallaFinal - characterIndex: $characterIndex, playerName: $playerName")
+
     val characters = listOf(
         R.drawable.goku,
         R.drawable.gomah,
@@ -37,12 +39,25 @@ fun PantallaFinal(
         R.drawable.masked_majin
     )
 
-    LaunchedEffect(Unit) {
+    LaunchedEffect(characterIndex, playerName) {
         viewModel.updateState(characterIndex, playerName)
     }
 
     val state by viewModel.state.collectAsState()
 
+    PantallaFinalContent(
+        characterIndex = state.selectedCharacter,
+        playerName = state.playerName,
+        characters = characters
+    )
+}
+
+@Composable
+private fun PantallaFinalContent(
+    characterIndex: Int,
+    playerName: String,
+    characters: List<Int>
+) {
     Column(
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally
@@ -58,7 +73,7 @@ fun PantallaFinal(
         Spacer(modifier = Modifier.height(32.dp))
         
         Text(
-            text = "¡Bienvenido ${state.playerName}!",
+            text = "¡Bienvenido $playerName!",
             fontSize = 24.sp,
             fontWeight = FontWeight.Bold,
             modifier = Modifier.padding(bottom = 16.dp)
@@ -66,7 +81,7 @@ fun PantallaFinal(
 
         Image(
             painter = painterResource(
-                id = characters[state.selectedCharacter]
+                id = characters.getOrElse(characterIndex) { R.drawable.goku }
             ),
             contentDescription = "Personaje seleccionado",
             modifier = Modifier
@@ -75,7 +90,7 @@ fun PantallaFinal(
         )
 
         Text(
-            text = "Has elegido a ${getCharacterName(state.selectedCharacter)}",
+            text = "Has elegido a ${getCharacterName(characterIndex)}",
             fontSize = 20.sp,
             modifier = Modifier.padding(top = 16.dp)
         )
@@ -97,12 +112,20 @@ private fun getCharacterName(index: Int): String {
 @Preview(showBackground = true)
 @Composable
 fun PantallaFinalPreview() {
-    val navController = rememberNavController()
+    val characters = listOf(
+        R.drawable.goku,
+        R.drawable.gomah,
+        R.drawable.vegeta,
+        R.drawable.piccolo,
+        R.drawable.supreme,
+        R.drawable.masked_majin
+    )
+    
     Repte02Theme {
-        PantallaFinal(
-            navController = navController,
+        PantallaFinalContent(
             characterIndex = 0,
-            playerName = "Jugador"
+            playerName = "Jugador de prueba",
+            characters = characters
         )
     }
 } 
