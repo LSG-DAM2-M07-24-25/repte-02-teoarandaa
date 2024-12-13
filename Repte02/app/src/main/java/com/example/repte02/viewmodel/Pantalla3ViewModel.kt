@@ -9,16 +9,14 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 class Pantalla3ViewModel : ViewModel() {
-    private val _state = MutableStateFlow(ScreenState(message = "Pantalla 3"))
+    private val _state = MutableStateFlow(ScreenState())
     val state: StateFlow<ScreenState> = _state.asStateFlow()
 
-    fun navigateBack(navigate: () -> Unit) {
-        viewModelScope.launch {
-            navigate()
-        }
+    fun updatePlayerName(name: String) {
+        _state.value = _state.value.copy(playerName = name)
     }
 
-    fun navigateToStart(navigate: () -> Unit) {
+    fun finishSetup(navigate: () -> Unit) {
         viewModelScope.launch {
             navigate()
         }
